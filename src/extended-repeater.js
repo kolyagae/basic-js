@@ -20,16 +20,18 @@ function repeater(str, options) {
     options.separator = "+";
   }
 
+  console.log(options.separator);
+
   if (options.additionSeparator === undefined) {
     options.additionSeparator = "|";
   }
 
-  if (
-    options.additionRepeatTimes === undefined &&
-    options.repeatTimes === undefined
-  ) {
-    options.repeatTimes = 1;
+  if (options.additionRepeatTimes === undefined) {
     options.additionRepeatTimes = 1;
+  }
+
+  if (options.repeatTimes === undefined) {
+    options.repeatTimes = 1;
   }
 
   str = String(str);
@@ -38,9 +40,11 @@ function repeater(str, options) {
   let additionAndAdditionSeparator = "";
 
   for (let i = 0; i < options.additionRepeatTimes; i++) {
-    additionAndAdditionSeparator += options.addition;
-    if (i < options.additionRepeatTimes - 1) {
-      additionAndAdditionSeparator += options.additionSeparator;
+    if (options.addition !== "undefined") {
+      additionAndAdditionSeparator += options.addition;
+      if (i < options.additionRepeatTimes - 1) {
+        additionAndAdditionSeparator += options.additionSeparator;
+      }
     }
   }
 
