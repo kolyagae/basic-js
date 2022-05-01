@@ -14,36 +14,33 @@ const { NotImplementedError } = require("../extensions/index.js");
  *
  */
 function transform(arr) {
+  let result = [];
   if (!Array.isArray(arr)) {
-    throw new Error("'arr' parameter must be an instance of the Array!");
+    throw new Error("myError");
   }
-  let result = arr;
-
-  for (let i = 0; i < result.length; i++) {
-    if (result[i] === "--double-next" && i < result.length) {
-      result[i] = result[i + 1];
-    }
-    if (result[i] === "--double-next" && i === result.length) {
-      result.splice(result[i], 1);
-    }
-    if (result[i] === "--double-prev" && i > 0) {
-      result[i] = result[i - 1];
-    }
-    if (result[i] === "--double-prev" && i === 0) {
-      result.splice(result[i], 1);
-    }
-    if (result[i] === "--discard-prev" && i > 0) {
-      result.splice(result[i - 2], 2);
-    }
-    if (result[i] === "--discard-prev" && i === 0) {
-      result.splice(result[i], 1);
-    }
-
-    if (result[i] === "--discard-next" && i < result.length) {
-      result.splice(result[i - 1], 2);
-    }
-    if (result[i] === "--discard-next" && i === result.length) {
-      result.splice(result[i], 1);
+  if (arr.length === 0) {
+    result = [];
+  } else {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === "--double__next") {
+        if (i < arr.length - 1) {
+          result.push(arr[i + 1]);
+        }
+      } else if (arr[i] === "--double__prev") {
+        if (i > 0) {
+          result.push(arr[i - 1]);
+        }
+      } else if (arr[i] === "--remove__next") {
+        if (i < arr.length - 1) {
+          i += 1;
+        }
+      } else if (arr[i] === "--remove__prev") {
+        if (i > 0) {
+          result.splice([i - 2], 1);
+        }
+      } else {
+        result.push(arr[i]);
+      }
     }
   }
   return result;
